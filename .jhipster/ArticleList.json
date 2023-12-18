@@ -1,0 +1,49 @@
+{
+  "annotations": {
+    "changelogDate": "20231218121441"
+  },
+  "applications": ["admin"],
+  "entityTableName": "article_list",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "counter",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "created",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "updated",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "ArticleList",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "articleItem",
+      "otherEntityRelationshipName": "articleList",
+      "relationshipName": "articleItem",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "apsUser",
+      "otherEntityRelationshipName": "articleList",
+      "relationshipName": "apsUser",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

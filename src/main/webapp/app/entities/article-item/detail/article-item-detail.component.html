@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (articleItem) {
+      <div>
+        <h2 data-cy="articleItemDetailsHeading"><span>Article Item</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ articleItem.id }}</span>
+          </dd>
+          <dt><span>Previous</span></dt>
+          <dd>
+            <span>{{ articleItem.previous }}</span>
+          </dd>
+          <dt><span>Code</span></dt>
+          <dd>
+            <span>{{ articleItem.code }}</span>
+          </dd>
+          <dt><span>Next</span></dt>
+          <dd>
+            <span>{{ articleItem.next }}</span>
+          </dd>
+          <dt><span>Article List</span></dt>
+          <dd>
+            @if (articleItem.articleList) {
+              <div>
+                <a [routerLink]="['/article-list', articleItem.articleList.id, 'view']">{{ articleItem.articleList.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/article-item', articleItem.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

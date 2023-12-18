@@ -1,0 +1,49 @@
+{
+  "annotations": {
+    "changelogDate": "20231218121041"
+  },
+  "applications": ["admin"],
+  "entityTableName": "article_category",
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "label",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "created",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "release",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "archived",
+      "fieldType": "Instant"
+    }
+  ],
+  "name": "ArticleCategory",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "article",
+      "otherEntityRelationshipName": "articleCategory",
+      "relationshipName": "article",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

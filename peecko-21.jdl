@@ -2,7 +2,7 @@ application {
   config {
     baseName admin
 	applicationType monolith
-    packageName com.peecko.office
+    packageName com.peecko.admin
     authenticationType jwt
     prodDatabaseType postgresql
 	cacheProvider ehcache
@@ -11,7 +11,8 @@ application {
     enableTranslation false
     nativeLanguage en
   }
-  entities *
+  entities * except SecuredRequest, VideoStat, ArticleStat, LikedVideo, LikedArticle, ViewedNotification, ViewedArticle
+  paginate * with pagination except Customer, ApsOrder, VideoCategory, ArticleCategory, VideoItem, ArticleItem, InvoiceItem
 }
 
 /*
