@@ -588,13 +588,6 @@ enum YesNo {
     N
 }
 
-enum Tags {
-    RELAX,
-    HEALTH,
-    TONING,
-    RESTORING
-}
-
 enum Intensity {
     BEGINNER,
     INTERMEDIATE,
