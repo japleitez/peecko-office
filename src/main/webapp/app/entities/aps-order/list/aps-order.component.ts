@@ -8,13 +8,24 @@ import SharedModule from 'app/shared/shared.module';
 import { SortDirective, SortByDirective } from 'app/shared/sort';
 import { DurationPipe, FormatMediumDatetimePipe, FormatMediumDatePipe } from 'app/shared/date';
 import { ItemCountComponent } from 'app/shared/pagination';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
 import { IApsOrder } from '../aps-order.model';
 import { EntityArrayResponseType, ApsOrderService } from '../service/aps-order.service';
 import { ApsOrderDeleteDialogComponent } from '../delete/aps-order-delete-dialog.component';
+
+import { map, startWith } from 'rxjs/operators';
+import { AsyncPipe } from '@angular/common';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+export interface CustomerOption {
+  id: number;
+  name: string;
+}
 
 @Component({
   standalone: true,
@@ -30,9 +41,22 @@ import { ApsOrderDeleteDialogComponent } from '../delete/aps-order-delete-dialog
     FormatMediumDatetimePipe,
     FormatMediumDatePipe,
     ItemCountComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    AsyncPipe,
   ],
 })
 export class ApsOrderComponent implements OnInit {
+  customer = new FormControl<string | CustomerOption>('');
+  options: CustomerOption[] = [
+    { id: 1, name: 'Mary' },
+    { id: 2, name: 'Shelley' },
+    { id: 3, name: 'Igor' },
+  ];
+  filteredOptions: Observable<CustomerOption[]> | undefined;
+
   apsOrders?: IApsOrder[];
   isLoading = false;
 
@@ -53,7 +77,23 @@ export class ApsOrderComponent implements OnInit {
   trackId = (_index: number, item: IApsOrder): number => this.apsOrderService.getApsOrderIdentifier(item);
 
   ngOnInit(): void {
+    this.filteredOptions = this.customer.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? this._filter(name as string) : this.options.slice();
+      }),
+    );
     this.load();
+  }
+
+  displayFn(co: CustomerOption): string {
+    return co && co.name ? co.name : '';
+  }
+
+  private _filter(name: string): CustomerOption[] {
+    const filterValue = name.toLowerCase();
+    return this.options.filter(co => co.name.toLowerCase().includes(filterValue));
   }
 
   delete(apsOrder: IApsOrder): void {

@@ -3,8 +3,8 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { RouterFeatures, TitleStrategy, provideRouter, withComponentInputBinding, withDebugTracing } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClientModule } from '@angular/common/http';
-
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import './config/dayjs';
@@ -13,6 +13,7 @@ import routes from './app.routes';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { NgbDateDayjsAdapter } from './config/datepicker-adapter';
 import { AppPageTitleStrategy } from './app-page-title-strategy';
+import { MaterialModule } from './shared/material/material.module';
 
 const routerFeatures: Array<RouterFeatures> = [withComponentInputBinding()];
 if (DEBUG_INFO_ENABLED) {
@@ -23,6 +24,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, ...routerFeatures),
     importProvidersFrom(BrowserModule),
+    importProvidersFrom(MaterialModule),
+    importProvidersFrom(BrowserAnimationsModule),
     // Set this to true to enable service worker (PWA)
     importProvidersFrom(ServiceWorkerModule.register('ngsw-worker.js', { enabled: false })),
     importProvidersFrom(HttpClientModule),
